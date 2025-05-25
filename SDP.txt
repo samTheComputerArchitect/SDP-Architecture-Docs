@@ -43,39 +43,20 @@ The SDP-1C has:
 
 The 8 general purpose registers are used with the Register Selector (RS). The RS has an input of 4 bits, and correspondingly selects the register. See Table-1 for the mappings. The RS only connects the selected register to the bus and enables operations for the register, The only exceptions are the A and B Registers, which are always connected to the bus.
 
-
-
-
-
-
-
-
 Table-1:
 
-
-
-
-Register
-	Input For The Register Selector
-	A
-	0x0
-	B
-	0x1
-	C
-	0x2
-	D
-	0x3
-	E
-	0x4
-	F
-	0x5
-	G
-	0x6
-	H
-	0x7
-	
-
-
++----------+---------------------------+
+| Register | Input For Register Selector |
++----------+---------------------------+
+| A        | 0x0                        |
+| B        | 0x1                        |
+| C        | 0x2                        |
+| D        | 0x3                        |
+| E        | 0x4                        |
+| F        | 0x5                        |
+| G        | 0x6                        |
+| H        | 0x7                        |
++----------+---------------------------+
 
 3.1.2 The ALU
 
@@ -85,34 +66,18 @@ The inputs of the ALU are the A and B registers. See Table-2 for the operations 
 
 Table-2:
 
-
-Operation
-	Registers Used
-	Description
-	Addition
-	A, B
-	Adds the contents of the A and B registers, and stores the result in the A register
-	Subtraction
-	A, B
-	Subtracts the contents of the A and B registers, and stores the result in the A register
-	Rotate Right
-	A
-	Rotates the A register right once and stores the result in the A register
-	Rotate Left
-	A
-	Rotates the A register left once and stores the result in the A register
-	XOR
-	A, B
-	XORs the contents of the A register and B register and stores the result in the A register
-	NAND
-	A, B
-	NANDs the contents of the A and B registers, and stores the result in the A register
-	Shift Right
-	A
-	Shifts the A register right once and stores the result in the A register
-	Shift Left
-	A
-	Shift the A register left once and stores the result in the A register
++---------------+----------------+---------------------------------------------+
+| Operation     | Registers Used | Description                                 |
++---------------+----------------+---------------------------------------------+
+| Addition      | A, B           | Adds the contents of A and B, storing in A |
+| Subtraction   | A, B           | Subtracts B from A, storing result in A     |
+| Rotate Right  | A              | Rotates A register right once              |
+| Rotate Left   | A              | Rotates A register left once               |
+| XOR          | A, B           | XORs A and B, storing result in A          |
+| NAND         | A, B           | NANDs A and B, storing result in A         |
+| Shift Right   | A              | Shifts A register right once               |
+| Shift Left    | A              | Shifts A register left once                |
++---------------+----------------+---------------------------------------------+
 	
 
 3.1.3 The MAR
@@ -166,216 +131,51 @@ The control logic takes the value of the IR as an input, as well as the flags, a
 
 The SDP-1C has 2 input ports, and 2 output ports. The input ports are 8 bits each, and the output ports are also 8-bits each.
 
-
-
-
 The ISA of the SDP-1C
 
-
-Instruction
-	Opcode
-	Operands
-	Flags set
-	
-
-	ldi
-	0xc3
-	Register, Value
-	No
-	1
-	adi
-	0x89
-	Register, Value
-	Yes
-	2
-	sbi
-	0x8a
-	Register, Value
-	Yes
-	3
-	sub
-	0x70
-	Register, Register
-	Yes
-	4
-	add
-	0x71
-	Register, Register
-	Yes
-	5
-	xor
-	0x88
-	Register, Register
-	Yes
-	6
-	nand
-	0x85
-	Register, Register
-	Yes
-	7
-	jmp
-	0x01
-	Address
-	No
-	8
-	jc
-	0x02
-	Address
-	No
-	9
-	jnc
-	0x03
-	Address
-	No
-	10
-	jz
-	0x04
-	Address
-	No
-	11
-	jnz
-	0x05
-	Address
-	No
-	12
-	jm
-	0x06
-	Address
-	No
-	13
-	jp
-	0x07
-	Address
-	No
-	14
-	call
-	0x50
-	Address
-	No
-	15
-	rts
-	0x51
-	-
-	No
-	16
-	phi
-	0x40
-	Value
-	No
-	17
-	push
-	0x41
-	Register
-	No
-	18
-	pull
-	0x42
-	Register
-	No
-	19
-	move
-	0x20
-	Register, Register
-	No
-	20
-	load
-	0x10
-	Address, Register
-	No
-	21
-	store
-	0x11
-	Register, Address
-	No
-	22
-	dcr
-	0xa0
-	Register
-	Yes
-	23
-	inc
-	0xa1
-	Register
-	Yes
-	24
-	hlt
-	0xff
-	-
-	No
-	25
-	nop
-	0xfe
-	-
-	No
-	26
-	ror
-	0xe0
-	Register
-	Yes
-	27
-	rol
-	0xe1
-	Register
-	Yes
-	28
-	rri
-	0xe2
-	Value, Register
-	No
-	29
-	rli
-	0xe3
-	Value, Register
-	No
-	30
-	sfr
-	0xe4
-	Register
-	Yes
-	31
-	sfl
-	0xe5
-	Register
-	Yes
-	32
-	sli
-	0xe6
-	Value, Register
-	No
-	33
-	sri
-	0xe7
-	Value, Register
-	No
-	34
-	in
-	0xb0
-	Port-no, Register
-	No
-	35
-	out
-	0xb1
-	Register, Port-no
-	No
-	36
-	xri
-	0xd0
-	Value, Register
-	Yes
-	37
-	nandi
-	0xd1
-	Value, Register
-	Yes
-	38
-	sgr
-	0xb8
-	-
-	No
-	39
-	
-
-
++-------------+--------+-------------------+-----------+
+| Instruction | Opcode | Operands          | Flags Set |
++-------------+--------+-------------------+-----------+
+| ldi         |  0xc3  | Register, Value   | No        |
+| adi         |  0x89  | Register, Value   | Yes       |
+| sbi         |  0x8a  | Register, Value   | Yes       |
+| sub         |  0x70  | Register, Register| Yes       |
+| add         |  0x71  | Register, Register| Yes       |
+| xor         |  0x88  | Register, Register| Yes       |
+| nand        |  0x85  | Register, Register| Yes       |
+| jmp         |  0x01  | Address           | No        |
+| jc          |  0x02  | Address           | No        |
+| jnc         |  0x03  | Address           | No        |
+| jz          |  0x04  | Address           | No        |
+| jnz         |  0x05  | Address           | No        |
+| jm          |  0x06  | Address           | No        |
+| jp          |  0x07  | Address           | No        |
+| call        |  0x50  | Address           | No        |
+| rts         |  0x51  | -                 | No        |
+| phi         |  0x40  | Value             | No        |
+| push        |  0x41  | Register          | No        |
+| pull        |  0x42  | Register          | No        |
+| move        |  0x20  | Register, Register| No        |
+| load        |  0x10  | Address, Register | No        |
+| store       |  0x11  | Register, Address | No        |
+| dcr         |  0xa0  | Register          | Yes       |
+| inc         |  0xa1  | Register          | Yes       |
+| hlt         |  0xff  | -                 | No        |
+| nop         |  0xfe  | -                 | No        |
+| ror         |  0xe0  | Register          | Yes       |
+| rol         |  0xe1  | Register          | Yes       |
+| rri         |  0xe2  | Value, Register   | No        |
+| rli         |  0xe3  | Value, Register   | No        |
+| sfr         |  0xe4  | Register          | Yes       |
+| sfl         |  0xe5  | Register          | Yes       |
+| sli         |  0xe6  | Value, Register   | No        |
+| sri         |  0xe7  | Value, Register   | No        |
+| in          |  0xb0  | Port-no, Register | No        |
+| out         |  0xb1  | Register, Port-no | No        |
+| xri         |  0xd0  | Value, Register   | Yes       |
+| nandi       |  0xd1  | Value, Register   | Yes       |
+| sgr         |  0xb8  | -                 | No        |
++-------------+--------+-------------------+-----------+
 
 LDI
 
@@ -416,22 +216,16 @@ PHI, PUSH And PULL
 The PHI instruction is used to push an immediate value onto the stack. The PUSH instruction is used to push the contents of a register onto the stack. PULL is used to pull the top of the stack into a register
 Table-3:
 
-
-Jump Instruction
-	Description
-	jc
-	Jumps to the address if the carry flag is set
-	jnc
-	Jumps to the address is the carry flag is not set
-	jz
-	Jumps to the address if the zero flag is set
-	jnz
-	Jumps to the address if the zero flag is not set
-	jm
-	Jumps to the address if the sign flag is set
-	jp
-	Jumps to the address if the sign flag is not set
-	
++------------------+---------------------------------------------------+
+| Jump Instruction | Description                                       |
++------------------+---------------------------------------------------+
+| jc              | Jumps to the address if the carry flag is set      |
+| jnc             | Jumps to the address if the carry flag is not set  |
+| jz              | Jumps to the address if the zero flag is set       |
+| jnz             | Jumps to the address if the zero flag is not set   |
+| jm              | Jumps to the address if the sign flag is set       |
+| jp              | Jumps to the address if the sign flag is not set   |
++------------------+---------------------------------------------------+
 
 
 
@@ -468,61 +262,39 @@ RRI and RLI stand for Rotate Right Immediate and Rotate Left Immediate. They tak
 
 SFR And SFL
 
-
 SFR and SFL stand for Shift Right, and Shift Left. They take a register as an operand, and shift the contents of the register left or right once, and then store the result back into the register.
-
 
 SLI And SRI
 
-
 SLI and SRI stand for Shift Left Immediate, and Shift Right Immediate. They take a value and register as operands, and shift the value left or right once, and then store the result into the specified register.
-
 
 IN And OUT
 
-
 The IN instruction takes an input port number and a register as operands. It takes the word at the specified input port number, and writes it into the specified register. The OUT instruction takes a register, and output port number as operands. It then writes the value of the specified register into the specified output port number. The OUT instruction also sets an acknowledge line high when the new data is in the port until the next clock cycle, then brings it low.
-
 
 XRI And NANDI
 
-
 XRI stands for XOR immediate, and takes a value, and a register as operands. It then XORs the value with the specified register, and then stores the result into the specified register. NANDI stands for NAND Immediate, and takes a value, and a register as operands. It then NANDs the value with the specified register, and stores the result into the specified register
-
-
-
 
 SGR
 
-
 SGR stands for Set GPU Render. It is a signal being read from the SDP-1G. When this instruction is executed, it will set the SGR signal high for one clock cycle, and then pull it low again.
-
 
 3.2 SDP-1D
 
-
 The SDP-1D is a 4x4 LED matrix that is controlled by the SDP-1G. The cathode of all the LEDs are connected to each other, and the anode of each LED is connected to the SDP-1G. As there are 4x4 LEDs, the SDP-1G will need to have 16 output pins in order to interface with the SDP-1D.
-
 
 3.2.3 Wiring
 
-
 The 16 output pins of the SDP-1G are mapped to the LED anodes. Pin 1 of the SDP-1G’s output is connected to the anode of LED 0 in the SDP-1D, and pin 16 of the SDP-1G’s output is connected to the anode of LED 15 in the SDP-1D.
 
-
-
-
 3.3 SDP-1G
-
 
 The SDP-1G interfaces with the output ports of the SDP-1C and the SGR signal, and outputs values for the SDP-1D to interpret. Port number 2 of the SDP-1C must be set to 0xff or 0xfe for the SDP-1G to read from port number 1 into its memory (VRAM). 
 3.3.1 VRAM
 
-
 The SDP-1G has 2 bytes of VRAM. The VRAM is represented with two 8-bit registers. The inputs of the registers are connected to port number 1 of the SDP-1C. When port number 2 of the SDP-1C is set to 0xff, the SDP-1G will read the value of port number 1 into the 1st register as soon as the acknowledge line goes high. When port number 2 is set to 0xfe, the SDP-1G will read the value of port number 1 into the 2nd register when the acknowledge line goes high. 
 
-
 3.3.2 The GL
-
 
 GL stands for GPU Latch. The GL is the last stage, and the outputs of the GL are what is connected to the anodes of the LEDs in the SDP-1D. The inputs of the GL are connected to the outputs of the VRAM. When the SGR signal is toggled high, the GL latches its inputs to the output.
